@@ -1,0 +1,29 @@
+main {
+    margin: 10px;
+    display: grid;
+    place-content: center;
+}
+
+p {
+    text-align: center;
+}
+
+button {
+    border: 0;
+    background-color: #1b8dca;
+    width: 140px;
+    padding: 10px;
+    text-align: center;
+    margin: 15px auto;
+    color: white;
+    box-shadow: 2px 3px 1px black;
+}
+
+.error {
+    color: red;
+    display: none;
+}
+
+.error.show {
+    display: block;
+}
