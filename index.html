@@ -6,16 +6,32 @@
         <title>🥏 Disc Golf Analyzer</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
         <main>
             <h1>🥏 Disc Golf Analyzer</h1>
-            <p>if you know, you know</p>
-            <input type="text" placeholder="secret"/>
-            <button>Log in to Strava</button>
+            <p>To help visualize your downward spiral</p>
+            <div id="spinner">
+                <p>fetching data...</p>
+                <p class="disc">🥏</p>
+                <p>if you are loading this for the first time and have a lot of activities this may take several minutes</p>
+                <p>since the Strava API is hot garbage</p>
+                <p>maybe they want it to be hard to get all activities? why provide a filter option?</p>
+                <p>or, you know, return less than 50 fields per activity by default?</p>
+                <p>but now you have plenty of time to read this</p>
+            </div>
+            <div id="results"></div>
         </main>
-        <p class="error">You need to enter a valid value into the text area for this app to work. Contact danielmcleod42@gmail.com to get this value.</p>
-        <script src="main.js" async defer></script>
+        <login>
+            <div class="shadow"></div>
+            <box>
+                <h2>Connect to Strava</h2>
+                <p>if you know, you know</p>
+                <input type="text" class="secret" placeholder="secret"/>
+                <button class="submit">Log In to Strava</button>
+            </box>
+        </login>
+        <script src="home.js" async defer></script>
     </body>
 </html>

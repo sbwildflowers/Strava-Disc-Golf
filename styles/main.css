@@ -1,0 +1,114 @@
+body {
+    font-family: cursive;
+}
+
+main {
+    margin: 10px;
+    display: grid;
+    place-content: center;
+}
+
+h1, p {
+    text-align: center;
+}
+
+button {
+    border: 0;
+    background-color: #1b8dca;
+    padding: 10px;
+    text-align: center;
+    margin: 15px auto;
+    color: white;
+    box-shadow: 2px 3px 1px black;
+    transition: box-shadow .25s;
+}
+
+button:disabled {
+    box-shadow: 0 0 0 black;
+    background: darkgrey;
+    color: #727272;
+}
+
+.error {
+    color: red;
+    display: none;
+    z-index: 99;
+    background: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    font-size: 20px;
+}
+
+.error.show {
+    display: block;
+}
+
+login {
+    place-content: center;
+    display: none;
+}
+
+login.show {
+    display: grid;
+}
+
+login box {
+    z-index: 23;
+    display: grid;
+    padding: 30px;
+    place-content: center;
+    background: white;
+    border: 5px solid orangered;
+}
+
+login box h2 {
+    color: orangered;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+login box p {
+    margin-top: 0;
+}
+
+login .shadow {
+    height: 100vh;
+    width: 100vw;
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: .8;
+    z-index: 0;
+}
+
+@keyframes spinner {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+#spinner {
+    display: none;
+}
+
+#spinner.show {
+    display: block;
+}
+
+#spinner .disc {
+    font-size: 50px;
+    margin-top: 0;
+    filter: invert();
+    animation-name: spinner;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+#spinner p {
+    color: #c25c09;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

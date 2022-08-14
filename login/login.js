@@ -5,11 +5,16 @@ async function getStravaTokens(secret, code) {
 
 window.onload = () => {
     const discCode = localStorage.getItem('disc_code');
-    if (discCode !== null) {
+    if (discCode !== null && window.location.href.split('code=').length > 1) {
         const responseCode = window.location.href.split('code=')[1].split('&scope')[0];
         getStravaTokens(discCode, responseCode).then(data => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
+            localStorage.setItem('access_expires', data.expires_at);
+            window.location.href = 'http://localhost:9000/'
         });
+    } else {
+        const errorDiv = document.querySelector('.error');
+        errorDiv.classList.add('show')
     }
 }
