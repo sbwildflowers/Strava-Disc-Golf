@@ -12,6 +12,11 @@ h1, p {
     text-align: center;
 }
 
+main h2 {
+    border-top: 1px solid #b8b8b8;
+    padding-top: 15px;
+}
+
 button {
     border: 0;
     background-color: #1b8dca;
@@ -110,5 +115,34 @@ login .shadow {
     color: #c25c09;
     font-size: 20px;
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+#spinner .id-like-to-speak-to-the-manager p {
+    font-size: 15px;
+    color: #08406d;
+    font-family: monospace;
+}
+
+body #results {
+    font-family: serif;
+    text-align: center;
+}
+
+table {
+    margin: 10px auto;
+}
+
+th, td {
+    border: 2px solid #fff;
+    padding: 7px;
+    text-align: center;
+}
+
+th {
+    background: #00c3fb;
+}
+
+td {
+    background-color: #dadada;
 }

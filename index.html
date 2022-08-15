@@ -7,6 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="bower_components/c3/c3.min.css">
     </head>
     <body>
         <main>
@@ -15,13 +16,16 @@
             <div id="spinner">
                 <p>fetching data...</p>
                 <p class="disc">🥏</p>
-                <p>if you are loading this for the first time and have a lot of activities this may take several minutes</p>
-                <p>since the Strava API is hot garbage</p>
-                <p>maybe they want it to be hard to get all activities? why provide a filter option?</p>
-                <p>or, you know, return less than 50 fields per activity by default?</p>
-                <p>but now you have plenty of time to read this</p>
+                <div class="id-like-to-speak-to-the-manager">
+                    <p>if you are loading this for the first time and have a lot of activities this may take several minutes</p>
+                    <p>since the Strava API is hot garbage</p>
+                    <p>maybe they want it to be hard to get all activities? why provide a filter option?</p>
+                    <p>or, you know, return less than 50 fields per activity by default?</p>
+                    <p>but now you have plenty of time to read this</p>
+                </div>
             </div>
             <div id="results"></div>
+            <div id="hole-1"></div>
         </main>
         <login>
             <div class="shadow"></div>
@@ -32,6 +36,8 @@
                 <button class="submit">Log In to Strava</button>
             </box>
         </login>
-        <script src="home.js" async defer></script>
+        <script src="main.js" async defer></script>
+        <script src="bower_components/d3/d3.min.js" async defer charset="utf-8"></script>
+        <script src="bower_components/c3/c3.min.js" async defer></script>
     </body>
 </html>
