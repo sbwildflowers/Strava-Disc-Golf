@@ -176,20 +176,76 @@ function processTotals(activities) {
     };
 }
 
-function buildChart(chartId, scores) {
+function buildChart(chartId, scores, trendLine) {
+    if (scores.length === 9) {
+        var xAxis = ['x', 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    } else {
+        var xAxis = ['x', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    }
     const scoresWithLabels = ['Scores'].concat(scores);
     var chart = c3.generate({
         bindto: document.getElementById(chartId),
         data: {
+            x: 'x',
             columns: [
-                scoresWithLabels
-            ]
+                xAxis,
+                scoresWithLabels,
+                trendLine
+            ],
+            regions: {
+                'Linear Trend' : [{'style':'dashed'}], // currently 'dashed' style only
+            }
+        },
+        axis : {
+            y : {
+                tick: { 
+                    format: function(d) {
+                        if (Math.floor(d) != d){
+                            return;
+                        }
+                        return d;
+                    }
+                }
+            }
         },
         title: {
             text: `${chartId.replace('-', ' ')}`
         }
     });
 }
+
+function calculateSlope(scores) {
+    const n = scores.length;
+    let total = 0;
+    let xtotal = 0;
+    let ytotal = 0;
+    let xsquared = 0;
+    for(let i = 0; i < n; i++) {
+        const y = scores[i];
+        const multiplier = y * (i + 1);
+        total += multiplier;
+        xtotal += i + 1;
+        ytotal += y;
+        xsquared += (i+1)**2;
+    }
+    const a = n * total;
+    const b = xtotal * ytotal;
+    const c = n * xsquared;
+    const d = xtotal**2;
+    const slope = (a - b) / (c - d);
+    return slope;
+}
+
+function calculateSlopePoints(scores, slope) {
+    const totals = scores.reduce((a,b) => b + a);
+    const f = slope * totals;
+    const intercept = (totals - f)/scores.length;
+    const slopeLine = ['Linear Trend'];
+    for (let i = 1; i < scores.length + 1; i++) {
+        slopeLine.push(slope * i + intercept);
+    }
+    return slopeLine;
+} 
 
 function processCourse(activities, course) {
     const resultsWrapper = document.querySelector('#results');
@@ -220,11 +276,19 @@ function processCourse(activities, course) {
     let worseHoleAverage = -999;
     let bestHole = 0;
     let worstHole = 0;
+    let mostImprovedSlope = 999;
+    let mostDeclinedSlope = -999;
+    let mostImprovedHole = 0;
+    let mostDeclinedHole = 0;
     let allHoleScores = [];
+    let allHoleTrends = [];
     for (let i = 0; i < allCourseRounds[0].length; i++) {
         holeName = i + 1;
         holeScores = allCourseRounds.map(x => x[i]);
+        slope = calculateSlope(holeScores);
+        holeTrendLine = calculateSlopePoints(holeScores, slope);
         allHoleScores.push(holeScores);
+        allHoleTrends.push(holeTrendLine);
         holeAverage = holeScores.reduce((a,b) => b + a) / holeScores.length;
         if (holeAverage < bestHoleAverage) {
             bestHoleAverage = holeAverage;
@@ -232,6 +296,13 @@ function processCourse(activities, course) {
         } else if (holeAverage > worseHoleAverage) {
             worseHoleAverage = holeAverage
             worstHole = holeName;
+        }
+        if (slope < mostImprovedSlope) {
+            mostImprovedSlope = slope;
+            mostImprovedHole = holeName;
+        } else if (slope > mostDeclinedSlope) {
+            mostDeclinedSlope = slope;
+            mostDeclinedHole = holeName;
         }
         resultsWrapper.innerHTML += `<div id=hole-${holeName}></div>`;
     }
@@ -241,13 +312,15 @@ function processCourse(activities, course) {
         'Course Best': courseBest,
         'Course Worst': courseWorst,
         'Best Hole': `${bestHole} (avg: ${bestHoleAverage})`,
-        'Worst Hole': `${worstHole} (avg: ${worseHoleAverage})`
+        'Worst Hole': `${worstHole} (avg: ${worseHoleAverage})`,
+        'Most Improved Hole': mostImprovedHole,
+        'Most Declined Hole': mostDeclinedHole
     };
     courseWrapper = document.querySelector(`#${course} .table`);
     courseWrapper.innerHTML += buildTable(courseTotals);
     setTimeout(function () {
         for (let i = 0; i < allHoleScores.length; i++) {
-            buildChart(`hole-${i+1}`, allHoleScores[i]);
+            buildChart(`hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
     }, 500);
 }
@@ -311,6 +384,7 @@ window.onload = () => {
             } else {
                 localStorage.setItem('disc_code', textBox.value);
                 window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read';
+                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read';
             }
         }
     } else {
