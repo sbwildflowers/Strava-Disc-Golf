@@ -267,7 +267,7 @@ function buildTable(object) {
 // looks up what we've cached in local storage and analyzes data / creates graphs
 function visualizeData() {
     const resultsWrapper = document.querySelector('#results');
-    const allActivities = JSON.parse(localStorage.getItem('activity_cache')).reverse();
+    const allActivities = JSON.parse(localStorage.getItem('activity_cache')).sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
     allProcessed = processTotals(allActivities);
     resultsWrapper.innerHTML += '<h2>Totals</h2>';
     resultsWrapper.innerHTML += buildTable(allProcessed);
