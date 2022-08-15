@@ -310,7 +310,7 @@ window.onload = () => {
                 // add an error popup!!!
             } else {
                 localStorage.setItem('disc_code', textBox.value);
-                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=http://localhost:9000/login&approval_prompt=force&scope=activity:read';
+                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.com/strava-disc-golf/login&approval_prompt=force&scope=activity:read';
             }
         }
     } else {
