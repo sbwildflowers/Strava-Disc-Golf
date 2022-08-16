@@ -343,7 +343,7 @@ function visualizeData() {
     const allActivities = JSON.parse(localStorage.getItem('activity_cache')).sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
     allProcessed = processTotals(allActivities);
     resultsWrapper.innerHTML += '<h2>Totals</h2>';
-    resultsWrapper.innerHTML += buildTable(allProcessed);
+    resultsWrapper.innerHTML += `<div class="table">${buildTable(allProcessed)}</div>`;
     courseNames = allActivities.map(x => extractCourseName(x.name)).filter(onlyUnique);
     for (course of courseNames) {
         courseRounds = allActivities.filter(x => extractCourseName(x.name) === course);

@@ -1,11 +1,13 @@
 body {
     font-family: cursive;
+    margin: 0;
 }
 
 main {
     margin: 10px;
     display: grid;
     place-content: center;
+    overflow: auto;
 }
 
 h1, p {
@@ -145,4 +147,24 @@ th {
 
 td {
     background-color: #dadada;
+}
+
+
+.table {
+    max-width: calc(100vw - 20px);
+    overflow: scroll;
+}
+
+div.c3 {
+    max-width: calc(100vw - 20px);
+}
+
+@media screen and (max-width: 600px) {
+    main {
+        place-content: unset;
+    }
+    
+    table {
+        margin: 10px 0;
+    }
 }
