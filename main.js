@@ -286,6 +286,7 @@ function processCourse(activities, course) {
         holeName = i + 1;
         holeScores = allCourseRounds.map(x => x[i]);
         slope = calculateSlope(holeScores);
+        console.log({'hole': holeName, 'slope': slope});
         holeTrendLine = calculateSlopePoints(holeScores, slope);
         allHoleScores.push(holeScores);
         allHoleTrends.push(holeTrendLine);
@@ -383,8 +384,8 @@ window.onload = () => {
                 // add an error popup!!!
             } else {
                 localStorage.setItem('disc_code', textBox.value);
-                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read';
-                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read';
+                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read_all';
+                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read_all';
             }
         }
     } else {
