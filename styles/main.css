@@ -152,7 +152,7 @@ td {
 
 .table {
     max-width: calc(100vw - 20px);
-    overflow: scroll;
+    overflow-x: auto;
 }
 
 div.c3 {
