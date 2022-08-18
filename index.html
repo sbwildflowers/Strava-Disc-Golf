@@ -12,6 +12,12 @@
     <body>
         <main>
             <h1>🥏 Disc Golf Analyzer</h1>
+            <div id="resets">
+                <button id="disconnect">Disconnect Strava</button>
+                <button id="refresh">Re-Pull Data</button>
+                <div class="shadow"></div>
+                <div id="warning">This will cause this app to forget all the activities it knows about and re-pull everything from scratch. It may take several minutes. Are you sure you want to proceed? <button id="yes-reset">Yes</button><button id="no-reset">No</button></div>
+            </div>
             <p>To help visualize your downward spiral</p>
             <div id="spinner">
                 <p>fetching data...</p>

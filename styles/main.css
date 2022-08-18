@@ -3,11 +3,52 @@ body {
     margin: 0;
 }
 
+#resets {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+#resets div#warning {
+    position: absolute;
+    font-size: 15px;
+    line-height: 1;
+    width: 0;
+    height: 0;
+    font-family: Calibri;
+    background: yellowgreen;
+    opacity: 0;
+    transition: opacity .25s;
+    left: -20px;
+}
+
+#resets div#warning.show {
+    width: 280px;
+    height: auto;
+    opacity: 1;
+    padding: 15px;
+    left: auto;
+}
+
+#resets div button {
+    margin-right: 15px;
+}
+
+#resets .shadow {
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+#resets .shadow.show {
+    opacity: .8;
+    height: 100vw;
+    width: 100vw;
+}
+
 main {
     margin: 10px;
     display: grid;
     place-content: center;
-    overflow: auto;
 }
 
 h1, p {
@@ -28,6 +69,7 @@ button {
     color: white;
     box-shadow: 2px 3px 1px black;
     transition: box-shadow .25s;
+    cursor: pointer;
 }
 
 button:disabled {
@@ -80,7 +122,7 @@ login box p {
     margin-top: 0;
 }
 
-login .shadow {
+.shadow {
     height: 100vh;
     width: 100vw;
     background: black;

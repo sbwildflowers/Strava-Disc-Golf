@@ -215,37 +215,29 @@ function buildChart(chartId, scores, trendLine) {
 }
 
 function calculateSlope(scores) {
-    const n = scores.length;
-    let total = 0;
-    let xtotal = 0;
-    let ytotal = 0;
-    let xsquared = 0;
-    for(let i = 0; i < n; i++) {
-        const y = scores[i];
-        const multiplier = y * (i + 1);
-        total += multiplier;
-        xtotal += i + 1;
-        ytotal += y;
-        xsquared += (i+1)**2;
+    const xVals = Array.from(Array(scores.length), (e,i)=>i+1);
+    const xMean = xVals.reduce((a,b) => b + a) / xVals.length;
+    const yMean = scores.reduce((a,b) => b + a) / scores.length;
+    const xDistsFromMean = xVals.map(x => x - xMean);
+    const yDistsFromMean = scores.map(y => y - yMean);
+    const xDistsSquaredSum = xDistsFromMean.map(x => x**2).reduce((a,b) => b + a);
+    xDistsTimesyDists = 0;
+    for (let i = 0; i < scores.length; i++) {
+        const multiplied = xDistsFromMean[i] * yDistsFromMean[i];
+        xDistsTimesyDists += multiplied;
     }
-    const a = n * total;
-    const b = xtotal * ytotal;
-    const c = n * xsquared;
-    const d = xtotal**2;
-    const slope = (a - b) / (c - d);
+    const slope = xDistsTimesyDists / xDistsSquaredSum;
     return slope;
 }
 
 function calculateSlopePoints(scores, slope) {
-    const totals = scores.reduce((a,b) => b + a);
-    const f = slope * totals;
-    const intercept = (totals - f)/scores.length;
+    const intercept = scores[0] - slope;
     const slopeLine = ['Linear Trend'];
     for (let i = 1; i < scores.length + 1; i++) {
-        slopeLine.push(slope * i + intercept);
+        slopeLine.push((slope * i) + intercept);
     }
     return slopeLine;
-} 
+}
 
 function processCourse(activities, course) {
     const resultsWrapper = document.querySelector('#results');
@@ -286,7 +278,6 @@ function processCourse(activities, course) {
         holeName = i + 1;
         holeScores = allCourseRounds.map(x => x[i]);
         slope = calculateSlope(holeScores);
-        console.log({'hole': holeName, 'slope': slope});
         holeTrendLine = calculateSlopePoints(holeScores, slope);
         allHoleScores.push(holeScores);
         allHoleTrends.push(holeTrendLine);
@@ -376,7 +367,7 @@ window.onload = () => {
             }
         }
           
-        textBox.addEventListener('input', inputHandler);
+        textBox.addEventListener('input.secret', inputHandler);
 
         loginButton.onclick = () => {
             // make sure user has entered something into the code input
@@ -389,7 +380,7 @@ window.onload = () => {
             }
         }
     } else {
-        if (accessTokenExpired() === true) {
+        /* if (accessTokenExpired() === true) {
             const refreshToken = localStorage.getItem('refresh_token');
             refreshAccess(discCode, refreshToken).then(data => {
                 localStorage.setItem('access_token', data.access_token);
@@ -399,6 +390,36 @@ window.onload = () => {
             });
         } else {
             fetchData().then(() => {visualizeData()});
+        } */
+
+        const disconnectButton = document.getElementById('disconnect');
+        disconnectButton.onclick = () => {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('access_expires');
+            location.reload();
         }
+
+        const refreshButton = document.getElementById('refresh');
+        refreshButton.onclick = () => {
+            const warning = document.getElementById('warning');
+            const shadow = document.querySelector('#resets .shadow');
+            warning.classList.add('show');
+            shadow.classList.add('show');
+
+            const yesButton = document.getElementById('yes-reset');
+            yesButton.unbind;
+            yesButton.onclick = () => {
+                localStorage.removeItem('last_fetch');
+                location.reload();
+            }
+
+            const noButton = document.getElementById('no-reset');
+            noButton.unbind;
+            noButton.onclick = () => {
+                warning.classList.remove('show');
+                shadow.classList.remove('show');
+            }
+        } 
     }
 }
