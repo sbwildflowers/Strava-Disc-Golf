@@ -107,13 +107,22 @@ async function fetchData() {
     }
 }
 
-// takes a tuple in string form and returns a json object
-function parseTupleString(tuple) {
-    tuple = tuple.replaceAll('+','');
-    tuple = tuple.replaceAll('(', '[');
-    tuple = tuple.replaceAll(')', ']');
-    tuple = `[${tuple}]`;
-    return JSON.parse(tuple);
+// takes a description in string form and returns a json object of the tuples inside it
+function parseTupleString(description) {
+    description = description.replaceAll('+','');
+    description = description.replaceAll('(', '[');
+    description = description.replaceAll(')', ']');
+    let finalString = '[';
+    while (description.includes('[') !== false) {
+        if (finalString !== '[') {
+            finalString += ',';
+        }
+        const oneTuple = description.substring(description.indexOf('['), description.indexOf(']')+1);
+        finalString += oneTuple;
+        description = description.substring(description.indexOf(']')+1);
+    }
+    finalString += ']';
+    return JSON.parse(finalString);
 }
 
 // filters list to only unique items
