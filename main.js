@@ -411,6 +411,7 @@ window.onload = () => {
             yesButton.unbind;
             yesButton.onclick = () => {
                 localStorage.removeItem('last_fetch');
+                localStorage.removeItem('activity_cache');
                 location.reload();
             }
 
