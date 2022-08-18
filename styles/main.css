@@ -4,8 +4,11 @@ body {
 }
 
 #resets {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
+    margin: 0 auto;
+}
+
+#resets #disconnect {
+    margin-right: 15px;
 }
 
 #resets div#warning {
@@ -26,7 +29,9 @@ body {
     height: auto;
     opacity: 1;
     padding: 15px;
-    left: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
 }
 
 #resets div button {
