@@ -312,8 +312,8 @@ function processCourse(activities, course) {
         'Avg Time / Round': `${parseInt((totalTime / courseTotal)/60)} minutes`,
         'Course Best': courseBest,
         'Course Worst': courseWorst,
-        'Best Hole': `${bestHole} (avg: ${bestHoleAverage})`,
-        'Worst Hole': `${worstHole} (avg: ${worseHoleAverage})`,
+        'Best Hole': `${bestHole} (avg: ${bestHoleAverage.toFixed(2)})`,
+        'Worst Hole': `${worstHole} (avg: ${worseHoleAverage.toFixed(2)})`,
         'Most Improved Hole': mostImprovedHole,
         'Most Declined Hole': mostDeclinedHole
     };
