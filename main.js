@@ -380,7 +380,7 @@ window.onload = () => {
             }
         }
     } else {
-        /* if (accessTokenExpired() === true) {
+        if (accessTokenExpired() === true) {
             const refreshToken = localStorage.getItem('refresh_token');
             refreshAccess(discCode, refreshToken).then(data => {
                 localStorage.setItem('access_token', data.access_token);
@@ -390,7 +390,7 @@ window.onload = () => {
             });
         } else {
             fetchData().then(() => {visualizeData()});
-        } */
+        }
 
         const disconnectButton = document.getElementById('disconnect');
         disconnectButton.onclick = () => {
