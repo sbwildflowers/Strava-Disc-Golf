@@ -236,16 +236,12 @@ function calculateSlope(scores) {
         xDistsTimesyDists += multiplied;
     }
     const slope = xDistsTimesyDists / xDistsSquaredSum;
-    return slope;
-}
-
-function calculateSlopePoints(scores, slope) {
-    const intercept = scores[0] - slope;
+    const intercept = yMean - (xMean * slope);
     const slopeLine = ['Linear Trend'];
     for (let i = 1; i < scores.length + 1; i++) {
         slopeLine.push((slope * i) + intercept);
     }
-    return slopeLine;
+    return {'slope': slope, 'slopePoints': slopeLine};
 }
 
 function processCourse(activities, course) {
@@ -286,8 +282,9 @@ function processCourse(activities, course) {
     for (let i = 0; i < allCourseRounds[0].length; i++) {
         holeName = i + 1;
         holeScores = allCourseRounds.map(x => x[i]);
-        slope = calculateSlope(holeScores);
-        holeTrendLine = calculateSlopePoints(holeScores, slope);
+        slopeData = calculateSlope(holeScores);
+        slope = slopeData.slope;
+        holeTrendLine = slopeData.slopePoints;
         allHoleScores.push(holeScores);
         allHoleTrends.push(holeTrendLine);
         holeAverage = holeScores.reduce((a,b) => b + a) / holeScores.length;
@@ -384,8 +381,8 @@ window.onload = () => {
                 // add an error popup!!!
             } else {
                 localStorage.setItem('disc_code', textBox.value);
-                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read_all';
-                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read_all';
+                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read_all';
+                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read_all';
             }
         }
     } else {
@@ -430,6 +427,6 @@ window.onload = () => {
                 warning.classList.remove('show');
                 shadow.classList.remove('show');
             }
-        } 
+        }
     }
 }

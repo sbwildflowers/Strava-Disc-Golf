@@ -11,8 +11,8 @@ window.onload = () => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
             localStorage.setItem('access_expires', data.expires_at);
-            window.location.href = 'https://sbwildflowers.github.io/Strava-Disc-Golf/'
-            // window.location.href = 'localhost:9000'
+            // window.location.href = 'https://sbwildflowers.github.io/Strava-Disc-Golf/'
+            window.location.href = 'localhost:9000'
         });
     } else {
         const errorDiv = document.querySelector('.error');
