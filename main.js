@@ -302,7 +302,7 @@ function processCourse(activities, course) {
             mostDeclinedSlope = slope;
             mostDeclinedHole = holeName;
         }
-        resultsWrapper.innerHTML += `<div id=hole-${holeName}></div>`;
+        resultsWrapper.innerHTML += `<div id=${course}-hole-${holeName}></div>`;
     }
     courseTotals = { 
         'Total Rounds': courseTotal,
@@ -318,7 +318,7 @@ function processCourse(activities, course) {
     courseWrapper.innerHTML += buildTable(courseTotals);
     setTimeout(function () {
         for (let i = 0; i < allHoleScores.length; i++) {
-            buildChart(`hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
+            buildChart(`${course}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
     }, 500);
 }
@@ -381,8 +381,8 @@ window.onload = () => {
                 // add an error popup!!!
             } else {
                 localStorage.setItem('disc_code', textBox.value);
-                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read_all';
-                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read_all';
+                window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=https://sbwildflowers.github.io/Strava-Disc-Golf/login&approval_prompt=force&scope=activity:read_all';
+                // window.location.href = 'http://www.strava.com/oauth/authorize?client_id=91780&response_type=code&redirect_uri=localhost:9000/login&approval_prompt=force&scope=activity:read_all';
             }
         }
     } else {
