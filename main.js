@@ -246,6 +246,7 @@ function calculateSlope(scores) {
 
 function processCourse(activities, course) {
     const resultsWrapper = document.querySelector('#results');
+    const courseId = course.split(' ').join('-').toLowerCase();
     let courseTotal = 0;
     let courseBest = 999;
     let courseWorst = -999;
@@ -302,7 +303,7 @@ function processCourse(activities, course) {
             mostDeclinedSlope = slope;
             mostDeclinedHole = holeName;
         }
-        resultsWrapper.innerHTML += `<div id=${course}-hole-${holeName}></div>`;
+        resultsWrapper.innerHTML += `<div id=${courseId}-hole-${holeName}></div>`;
     }
     courseTotals = { 
         'Total Rounds': courseTotal,
@@ -314,11 +315,11 @@ function processCourse(activities, course) {
         'Most Improved Hole': mostImprovedHole,
         'Most Declined Hole': mostDeclinedHole
     };
-    courseWrapper = document.querySelector(`#${course} .table`);
+    courseWrapper = document.querySelector(`#${courseId} .table`);
     courseWrapper.innerHTML += buildTable(courseTotals);
     setTimeout(function () {
         for (let i = 0; i < allHoleScores.length; i++) {
-            buildChart(`${course}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
+            buildChart(`${courseId}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
     }, 500);
 }
@@ -345,7 +346,7 @@ function visualizeData() {
     courseNames = allActivities.map(x => extractCourseName(x.name)).filter(onlyUnique);
     for (course of courseNames) {
         courseRounds = allActivities.filter(x => extractCourseName(x.name) === course);
-        resultsWrapper.innerHTML += `<div id="${course}"><h2>${course} Course</h2><div class="table"></div></div>`;
+        resultsWrapper.innerHTML += `<div id="${course.split(' ').join('-').toLowerCase()}"><h2>${course} Course</h2><div class="table"></div></div>`;
         processCourse(courseRounds, course);
     }
 }
