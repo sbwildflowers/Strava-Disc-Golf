@@ -251,6 +251,7 @@ function processCourse(activities, course) {
     let courseBest = 999;
     let courseWorst = -999;
     let allCourseRounds = [];
+    let allCourseScores = [];
     let totalTime = 0;
     for (const activity of activities) {
         if ('description' in activity) {
@@ -259,6 +260,7 @@ function processCourse(activities, course) {
             totalTime += activity.elapsedTime;
             for (round of roundsObj) {
                 score = round.reduce((a,b) => b + a);
+                allCourseScores.push(score);
                 allCourseRounds.push(round);
                 courseTotal += 1;
                 if (score < courseBest) {
@@ -280,6 +282,7 @@ function processCourse(activities, course) {
     let mostDeclinedHole = 0;
     let allHoleScores = [];
     let allHoleTrends = [];
+    resultsWrapper.innerHTML += `<div id=${courseId}-totals></div>`
     for (let i = 0; i < allCourseRounds[0].length; i++) {
         holeName = i + 1;
         holeScores = allCourseRounds.map(x => x[i]);
@@ -318,6 +321,9 @@ function processCourse(activities, course) {
     courseWrapper = document.querySelector(`#${courseId} .table`);
     courseWrapper.innerHTML += buildTable(courseTotals);
     setTimeout(function () {
+        slopeData = calculateSlope(allCourseScores);
+        courseTrendLine = slopeData.slopePoints;
+        buildChart(`${courseId}-totals`, allCourseScores, courseTrendLine);
         for (let i = 0; i < allHoleScores.length; i++) {
             buildChart(`${courseId}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
