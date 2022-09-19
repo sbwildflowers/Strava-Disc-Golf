@@ -310,13 +310,14 @@ function processCourse(activities, course) {
     }
     courseTotals = { 
         'Total Rounds': courseTotal,
-        'Avg Time / Round': `${parseInt((totalTime / courseTotal)/60)} minutes`,
+        'Course Avg.': `${(allCourseScores/allCourseScores.length).toFixed(2)}`,
         'Course Best': courseBest,
         'Course Worst': courseWorst,
         'Best Hole': `${bestHole} (avg: ${bestHoleAverage.toFixed(2)})`,
         'Worst Hole': `${worstHole} (avg: ${worseHoleAverage.toFixed(2)})`,
         'Most Improved Hole': mostImprovedHole,
-        'Most Declined Hole': mostDeclinedHole
+        'Most Declined Hole': mostDeclinedHole,
+        'Avg Time / Round': `${parseInt((totalTime / courseTotal)/60)} minutes`
     };
     courseWrapper = document.querySelector(`#${courseId} .table`);
     courseWrapper.innerHTML += buildTable(courseTotals);
@@ -327,7 +328,7 @@ function processCourse(activities, course) {
         for (let i = 0; i < allHoleScores.length; i++) {
             buildChart(`${courseId}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
-    }, 500);
+    }, 1500);
 }
 
 // takes an object and builds an html table from it
