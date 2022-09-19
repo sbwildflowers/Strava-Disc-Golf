@@ -186,18 +186,12 @@ function processTotals(activities) {
 }
 
 function buildChart(chartId, scores, trendLine) {
-    if (scores.length === 9) {
-        var xAxis = ['x', 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    } else {
-        var xAxis = ['x', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-    }
     const scoresWithLabels = ['Scores'].concat(scores);
     var chart = c3.generate({
         bindto: document.getElementById(chartId),
         data: {
             x: 'x',
             columns: [
-                xAxis,
                 scoresWithLabels,
                 trendLine
             ],
@@ -272,8 +266,6 @@ function processCourse(activities, course) {
             }
         }
     }
-    console.log({allCourseScores});
-    console.log({allCourseRounds});
     let bestHoleAverage = 999;
     let worseHoleAverage = -999;
     let bestHole = 0;
@@ -312,7 +304,7 @@ function processCourse(activities, course) {
     }
     courseTotals = { 
         'Total Rounds': courseTotal,
-        'Course Avg.': `${(allCourseScores.reduce((a,b) => b + a)/allCourseScores.length).toFixed(2)}`,
+        'Course Avg.': (allCourseScores.reduce((a,b) => b + a)/allCourseScores.length).toFixed(2),
         'Course Best': courseBest,
         'Course Worst': courseWorst,
         'Best Hole': `${bestHole} (avg: ${bestHoleAverage.toFixed(2)})`,
@@ -324,13 +316,15 @@ function processCourse(activities, course) {
     courseWrapper = document.querySelector(`#${courseId} .table`);
     courseWrapper.innerHTML += buildTable(courseTotals);
     setTimeout(function () {
+        console.log({allCourseScores});
+        console.log({allCourseRounds});
         slopeData = calculateSlope(allCourseScores);
         courseTrendLine = slopeData.slopePoints;
         buildChart(`${courseId}-totals`, allCourseScores, courseTrendLine);
         for (let i = 0; i < allHoleScores.length; i++) {
             buildChart(`${courseId}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
-    }, 3000);
+    }, 500);
 }
 
 // takes an object and builds an html table from it
