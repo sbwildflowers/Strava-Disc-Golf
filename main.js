@@ -190,7 +190,6 @@ function buildChart(chartId, scores, trendLine) {
     var chart = c3.generate({
         bindto: document.getElementById(chartId),
         data: {
-            x: 'x',
             columns: [
                 scoresWithLabels,
                 trendLine
