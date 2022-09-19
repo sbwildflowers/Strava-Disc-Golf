@@ -272,6 +272,8 @@ function processCourse(activities, course) {
             }
         }
     }
+    console.log({allCourseScores});
+    console.log({allCourseRounds});
     let bestHoleAverage = 999;
     let worseHoleAverage = -999;
     let bestHole = 0;
