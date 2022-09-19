@@ -312,7 +312,7 @@ function processCourse(activities, course) {
     }
     courseTotals = { 
         'Total Rounds': courseTotal,
-        'Course Avg.': `${(allCourseScores/allCourseScores.length).toFixed(2)}`,
+        'Course Avg.': `${(allCourseScores.reduce((a,b) => b + a)/allCourseScores.length).toFixed(2)}`,
         'Course Best': courseBest,
         'Course Worst': courseWorst,
         'Best Hole': `${bestHole} (avg: ${bestHoleAverage.toFixed(2)})`,
@@ -330,7 +330,7 @@ function processCourse(activities, course) {
         for (let i = 0; i < allHoleScores.length; i++) {
             buildChart(`${courseId}-hole-${i+1}`, allHoleScores[i], allHoleTrends[i]);
         }
-    }, 1500);
+    }, 3000);
 }
 
 // takes an object and builds an html table from it
