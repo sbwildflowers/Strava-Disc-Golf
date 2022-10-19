@@ -316,8 +316,6 @@ function processCourse(activities, course) {
     courseWrapper = document.querySelector(`#${courseId} .table`);
     courseWrapper.innerHTML += buildTable(courseTotals);
     setTimeout(function () {
-        console.log({allCourseScores});
-        console.log({allCourseRounds});
         slopeData = calculateSlope(allCourseScores);
         courseTrendLine = slopeData.slopePoints;
         buildChart(`${courseId}-totals`, allCourseScores, courseTrendLine);
