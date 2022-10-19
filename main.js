@@ -52,7 +52,7 @@ async function getActivityById(id, token) {
 }
 
 // talks to Strava and builds cache in local storage of revelant disc golf activites based on naming convention
-// sadly the activites end point is garbage and has no filter and returns 50 fields by default :`| so this takes a while
+// sadly the activites end point is garbage and has no filter and returns 50 fields by default, so this takes a while
 async function fetchData() {
     const spinner = document.getElementById('spinner');
     const accessToken = localStorage.getItem('access_token');
@@ -72,6 +72,7 @@ async function fetchData() {
         }
     }
     spinner.classList.remove('show');
+    console.log(allActivities);
 
     // save last fetch and cache items in localStorage so we don't have to do this ridiculously long pull again
     discGolfActivities = [];
@@ -88,7 +89,7 @@ async function fetchData() {
             } else {
                 var description = '';
             }
-            activityObj = {
+            const activityObj = {
                 'name': name,
                 'elapsedTime': elapsedTime,
                 'date': date,
